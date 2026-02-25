@@ -142,7 +142,20 @@ function renderPokemon(id, data) {
             <span>${s.replace('_', ' ').toUpperCase()}</span>
             <span>${data[s]}</span>
         </div>
-    `).join('');
+    `).join('') + `
+        <div class="stat-row" style="color:var(--secondary);">
+            <span>HEIGHT</span>
+            <span>${data.height_m.toFixed(1)}m</span>
+        </div>
+        <div class="stat-row" style="color:var(--secondary);">
+            <span>WEIGHT</span>
+            <span>${data.weight_kg.toFixed(1)}kg</span>
+        </div>
+        <div class="stat-row" style="color:var(--secondary);">
+            <span>BMI</span>
+            <span>${data.bmi.toFixed(1)}</span>
+        </div>
+    `;
 
     const typesContainer = document.getElementById(`${id}-types`);
     typesContainer.innerHTML = `<span class="type-badge type-${data.type1}">${data.type1}</span>`;

@@ -64,7 +64,10 @@ def get_pokemon():
             "defense": int(row['defense']),
             "sp_attack": int(row["sp_attack"]),
             "sp_defense": int(row["sp_defense"]),
-            "speed": int(row["speed"])
+            "speed": int(row["speed"]),
+            "height_m": float(row["height_m"]) if "height_m" in row and pd.notna(row["height_m"]) else 0.0,
+            "weight_kg": float(row["weight_kg"]) if "weight_kg" in row and pd.notna(row["weight_kg"]) else 0.0,
+            "bmi": float(row["bmi"]) if "bmi" in row and pd.notna(row["bmi"]) else 0.0
         })
     return jsonify(sorted(pokemon_list, key=lambda x: x['name']))
 

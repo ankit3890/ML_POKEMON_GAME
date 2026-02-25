@@ -25,6 +25,14 @@ def prepare_data():
         df_new.columns = df_new.columns.str.replace("Against ", "against_", regex=False).str.lower().str.replace(" ", "_")
         df_new["type2"] = df_new["type2"].fillna("none")
         df_new = df_new.rename(columns={"bst": "base_total"})
+        
+        df_new["height_m"] = pd.to_numeric(df_new["height_m"], errors="coerce")
+        df_new["weight_kg"] = pd.to_numeric(df_new["weight_kg"], errors="coerce")
+        df_new["height_m"] = df_new["height_m"].fillna(df_new["height_m"].median())
+        df_new["weight_kg"] = df_new["weight_kg"].fillna(df_new["weight_kg"].median())
+        df_new["bmi"] = df_new["weight_kg"] / (df_new["height_m"] ** 2)
+        df_new["bmi"] = df_new["bmi"].fillna(0)
+        
         bk = df_new.copy()
         bk.to_csv("pokemon.csv", index=False)
     
@@ -45,8 +53,6 @@ def prepare_data():
     drop_cols = ["japanese_name", "pokedex_number", "classfication", "abilities"] # Kept 'name' for lookup
     df = df.drop(columns=[col for col in drop_cols if col in df.columns])
     df["type2"] = df["type2"].fillna("None")
-    df["height_m"] = df["height_m"].fillna(df["height_m"].median())
-    df["weight_kg"] = df["weight_kg"].fillna(df["weight_kg"].median())
     if 'percentage_male' in df.columns:
         df = df.drop(['percentage_male'], axis=1)
     df["capture_rate"] = pd.to_numeric(df["capture_rate"], errors="coerce")
