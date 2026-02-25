@@ -1,4 +1,3 @@
-import kagglehub
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -12,28 +11,7 @@ def prepare_data():
     if os.path.exists("pokemon.csv"):
         bk = pd.read_csv("pokemon.csv")
     else:
-        # Download latest version as fallback
-        path = kagglehub.dataset_download("maca11/all-pokemon-dataset")
-        df1 = pd.read_csv(os.path.join(path, "All_Pokemon.csv"))
-        df1.columns = df1.columns.str.strip()
-        df_new = df1.rename(columns={
-            "Number": "pokedex_number", "Name": "name", "Type 1": "type1", "Type 2": "type2",
-            "HP": "hp", "Att": "attack", "Def": "defense", "Spa": "sp_attack", "Spd": "sp_defense", "Spe": "speed",
-            "Legendary": "is_legendary", "Height": "height_m", "Weight": "weight_kg", "Catch Rate": "capture_rate"
-        })
-        df_new.columns = df_new.columns.str.replace("Against ", "against_", regex=False).str.lower().str.replace(" ", "_")
-        df_new["type2"] = df_new["type2"].fillna("none")
-        df_new = df_new.rename(columns={"bst": "base_total"})
-        
-        df_new["height_m"] = pd.to_numeric(df_new["height_m"], errors="coerce")
-        df_new["weight_kg"] = pd.to_numeric(df_new["weight_kg"], errors="coerce")
-        df_new["height_m"] = df_new["height_m"].fillna(df_new["height_m"].median())
-        df_new["weight_kg"] = df_new["weight_kg"].fillna(df_new["weight_kg"].median())
-        df_new["bmi"] = df_new["weight_kg"] / (df_new["height_m"] ** 2)
-        df_new["bmi"] = df_new["bmi"].fillna(0)
-        
-        bk = df_new.copy()
-        bk.to_csv("pokemon.csv", index=False)
+        raise FileNotFoundError("pokemon.csv not found. Ensure the dataset is present in the deployment environment.")
     
     df = bk.copy()
 
