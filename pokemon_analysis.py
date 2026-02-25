@@ -4,9 +4,8 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import RandomForestClassifier
+# Removed: from sklearn.model_selection import train_test_split
+# Removed: from sklearn.ensemble import RandomForestClassifier
 
 def prepare_data():
     # Prefer local CSV for deployment
@@ -81,15 +80,31 @@ def prepare_data():
     # Drop all unused text strings from the maca11 dataset (Dex Entry, Growth Rate, etc.)
     df_ml = df_ml.select_dtypes(exclude=['object', 'string'])
 
-    # Train Model
-    battle_df = generate_battles(df_ml, bk, n_battles=5000)
-    X = battle_df.drop("winner", axis=1)
-    y = battle_df["winner"]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    model = RandomForestClassifier(n_estimators=200, random_state=42)
-    model.fit(X_train, y_train)
+    # Removed: Train Model section
+    # battle_df = generate_battles(df_ml, bk, n_battles=5000)
+    # X = battle_df.drop("winner", axis=1)
+    # y = battle_df["winner"]
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    # model = RandomForestClassifier(n_estimators=200, random_state=42)
+    # model.fit(X_train, y_train)
 
-    return bk, pre_encoded_df, df_ml, model
+    return bk, pre_encoded_df, df_ml, None # Changed to return None instead of model
+
+# Removed: generate_battles function
+# def generate_battles(df_ml, bk, n_battles=5000):
+#     battles = []
+#     for _ in range(n_battles):
+#         p1 = df_ml.sample(1).iloc[0]
+#         p2 = df_ml.sample(1).iloc[0]
+#         winner = simulate_battle(p1, p2, bk)
+#         battle_features = {}
+#         for col in df_ml.columns:
+#             if col != "is_legendary":
+#                 battle_features[f"p1_{col}"] = p1[col]
+#                 battle_features[f"p2_{col}"] = p2[col]
+#         battle_features["winner"] = winner
+#         battles.append(battle_features)
+#     return pd.DataFrame(battles)
 
 def simulate_battle(p1, p2, bk):
     # Base damage

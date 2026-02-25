@@ -13,18 +13,9 @@ CORS(app)
 # ===============================
 # DATA LOAD & INITIALIZATION
 # ===============================
-print("Loading Pokémon data and model...")
-if os.path.exists("model_cache.pkl.gz"):
-    with gzip.open("model_cache.pkl.gz", "rb") as f:
-        data = pickle.load(f)
-        bk = data["bk"]
-        encoded_df = data["encoded_df"]
-        df_ml = data["df_ml"]
-        model = data["model"]
-    print("Loaded from model_cache.pkl.gz successfully!")
-else:
-    bk, encoded_df, df_ml, model = prepare_data()
-    print("Computed dynamically successfully!")
+print("Loading Pokémon data...")
+bk, encoded_df, df_ml, _ = prepare_data()
+print("Data loaded successfully!")
 
 LEADERBOARD_FILE = "leaderboard.csv"
 
@@ -91,20 +82,25 @@ def predict():
     p1_data = encoded_df[encoded_df["name"] == p1_name].iloc[0]
     p2_data = encoded_df[encoded_df["name"] == p2_name].iloc[0]
 
-    battle_features = {}
-    for col in df_ml.columns:
-        if col != "is_legendary":
-            battle_features[f"p1_{col}"] = df_ml.loc[p1_data.name, col]
-            battle_features[f"p2_{col}"] = df_ml.loc[p2_data.name, col]
-
-    test_df = pd.DataFrame([battle_features])
-    model_columns = model.feature_names_in_
-    test_df = test_df.reindex(columns=model_columns, fill_value=0)
+    # Heuristic probability calculation
+    p1_total = p1_data['hp'] + p1_data['attack'] + p1_data['defense'] + p1_data['sp_attack'] + p1_data['sp_defense'] + p1_data['speed']
+    p2_total = p2_data['hp'] + p2_data['attack'] + p2_data['defense'] + p2_data['sp_attack'] + p2_data['sp_defense'] + p2_data['speed']
     
-    proba = model.predict_proba(test_df)[0]
+    total = p1_total + p2_total
+    p1_prob = p1_total / total if total > 0 else 0.5
+    p2_prob = p2_total / total if total > 0 else 0.5
+    
+    # Adjust slightly based on speed
+    if p1_data['speed'] > p2_data['speed']:
+        p1_prob = min(0.99, p1_prob + 0.05)
+        p2_prob = max(0.01, p2_prob - 0.05)
+    elif p2_data['speed'] > p1_data['speed']:
+        p2_prob = min(0.99, p2_prob + 0.05)
+        p1_prob = max(0.01, p1_prob - 0.05)
+    
     return jsonify({
-        "p1_prob": float(proba[1]),
-        "p2_prob": float(proba[0])
+        "p1_prob": float(p1_prob),
+        "p2_prob": float(p2_prob)
     })
 
 @app.route('/api/battle', methods=['POST'])
