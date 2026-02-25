@@ -1,0 +1,672 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+:root {
+    --bg-dark: #0D0D0D;
+    --card-bg: #111111;
+    --accent: #FF3D00;
+    --secondary: #FFD600;
+    --glow: #FF9100;
+    --success: #22c55e;
+    --danger: #ef4444;
+}
+
+html,
+body {
+    background: radial-gradient(circle at center, #1a1a1a 0%, #0D0D0D 80%);
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Arena lighting overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    background: radial-gradient(circle, rgba(255, 61, 0, 0.05), transparent 60%);
+    animation: arenaLight 8s infinite alternate;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes arenaLight {
+    0% {
+        transform: translate(-20px, -20px);
+    }
+
+    100% {
+        transform: translate(20px, 20px);
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+header h1 {
+    font-size: 3rem;
+    text-shadow: 0 0 20px rgba(255, 145, 0, 0.6);
+    margin: 0;
+}
+
+/* Selection Section */
+.selection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.sel-block {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+    font-size: 0.9rem;
+}
+
+select {
+    background: var(--card-bg);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.8rem;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+}
+
+/* Pokémon Card */
+.battle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.pokemon-card {
+    background: linear-gradient(145deg, #1f1f1f, #111111);
+    border-radius: 25px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 61, 0, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-5px);
+}
+
+.pokemon-card h3 {
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+    color: var(--accent);
+}
+
+.pokemon-sprite {
+    width: 180px;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
+
+.hp-container {
+    background: #000000;
+    border-radius: 12px;
+    height: 24px;
+    width: 100%;
+    margin: 1.5rem 0 0.5rem 0;
+    overflow: hidden;
+    border: 1px solid rgba(255, 145, 0, 0.2);
+}
+
+.hp-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    transition: width 0.6s ease;
+    width: 100%;
+}
+
+.hp-bar.low {
+    background: linear-gradient(90deg, #ef4444, #b91c1c);
+    animation: pulseRed 1s infinite alternate;
+}
+
+@keyframes pulseRed {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+.hp-text {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.stats-box {
+    margin: 1rem 0;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-row span:first-child {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.stat-row span:last-child {
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.prob-text {
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Winner Glow */
+.winner-glow {
+    animation: winnerPulse 1.5s infinite alternate;
+    border: 2px solid var(--accent);
+}
+
+@keyframes winnerPulse {
+    0% {
+        box-shadow: 0 0 15px var(--accent);
+    }
+
+    100% {
+        box-shadow: 0 0 45px var(--accent);
+    }
+}
+
+/* Controls */
+.controls {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.start-btn {
+    background: linear-gradient(135deg, var(--accent), var(--glow));
+    color: #fff;
+    border: none;
+    padding: 1.2rem 4rem;
+    font-size: 1.4rem;
+    font-family: inherit;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 61, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+.start-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px rgba(255, 145, 0, 0.6);
+}
+
+.start-btn:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+.secondary-btn {
+    background: linear-gradient(135deg, #2b2b2b, #1f1f1f);
+    color: var(--secondary);
+    border: 1px solid var(--accent);
+    padding: 1.2rem 2.5rem;
+    font-size: 1.4rem;
+    font-family: inherit;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 214, 0, 0.2);
+    transition: all 0.3s ease;
+    margin-left: 1rem;
+}
+
+.secondary-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px rgba(255, 214, 0, 0.4);
+    background: linear-gradient(135deg, #3a3a3a, #2b2b2b);
+}
+
+.secondary-btn:disabled {
+    opacity: 0.5;
+    cursor: wait;
+}
+
+/* Battle Log */
+.battle-log {
+    background: var(--card-bg);
+    border-radius: 15px;
+    padding: 1.5rem;
+    height: 250px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    margin-top: 2rem;
+}
+
+.log-entry {
+    margin-bottom: 0.6rem;
+    border-left: 3px solid var(--accent);
+    padding-left: 0.8rem;
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Battle Log Text Formatting */
+.log-super {
+    color: #4ade80;
+    font-weight: bold;
+}
+
+.log-not-very {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.log-crit {
+    color: #ef4444;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+}
+
+.log-damage {
+    color: #facc15;
+    font-weight: bold;
+}
+
+/* Type Badges */
+.type-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.type-badge {
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.type-fire {
+    background: #ff4422;
+}
+
+.type-water {
+    background: #3399ff;
+}
+
+.type-grass {
+    background: #77cc55;
+}
+
+.type-electric {
+    background: #ffcc33;
+    color: black;
+}
+
+.type-ice {
+    background: #66ccff;
+    color: black;
+}
+
+.type-fighting {
+    background: #bb5544;
+}
+
+.type-poison {
+    background: #aa5599;
+}
+
+.type-ground {
+    background: #ddbb55;
+    color: black;
+}
+
+.type-flying {
+    background: #8899ff;
+}
+
+.type-psychic {
+    background: #ff5599;
+}
+
+.type-bug {
+    background: #aabb22;
+}
+
+.type-rock {
+    background: #bbaa66;
+}
+
+.type-ghost {
+    background: #6666bb;
+}
+
+.type-dragon {
+    background: #7766ee;
+}
+
+.type-dark {
+    background: #775544;
+}
+
+.type-steel {
+    background: #aaaabb;
+    color: black;
+}
+
+.type-fairy {
+    background: #ee99ee;
+    color: black;
+}
+
+.type-normal {
+    background: #aaaa99;
+    color: black;
+}
+
+/* Damage Float Animation */
+.damage-float {
+    position: absolute;
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: #ff4d4d;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 20px #ff4d4d;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.damage-float.active {
+    animation: floatUpFade 1s forwards ease-out;
+}
+
+@keyframes floatUpFade {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 1;
+    }
+
+    30% {
+        transform: translate(-50%, -80px) scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -120px) scale(1);
+        opacity: 0;
+    }
+}
+
+/* ==================================
+   1. SCREEN SHAKE (CRITICAL HIT)
+   ================================== */
+@keyframes shakeCrit {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-4px, -2px) rotate(-2deg);
+    }
+
+    20% {
+        transform: translate(-6px, 0px) rotate(2deg);
+    }
+
+    30% {
+        transform: translate(6px, 4px) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(2px, -2px) rotate(2deg);
+    }
+
+    50% {
+        transform: translate(-4px, 4px) rotate(-2deg);
+    }
+
+    60% {
+        transform: translate(-6px, 2px) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(6px, 2px) rotate(-2deg);
+    }
+
+    80% {
+        transform: translate(-2px, -2px) rotate(2deg);
+    }
+
+    90% {
+        transform: translate(2px, 4px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(2px, -4px) rotate(-2deg);
+    }
+}
+
+.screen-shake {
+    animation: shakeCrit 0.45s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+}
+
+/* Flash Overlay on Critical Hit */
+@keyframes flashOverlay {
+    0% {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    100% {
+        background-color: rgba(255, 255, 255, 0);
+    }
+}
+
+.crit-flash::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
+    animation: flashOverlay 0.3s ease-out forwards;
+}
+
+/* ==================================
+   2. PARTICLE SPARKS (ON ATTACK)
+   ================================== */
+.spark-container {
+    position: absolute;
+    width: 200px;
+    height: 250px;
+    pointer-events: none;
+    z-index: 50;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.spark {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff 10%, #ffcc00 40%, #ff4400 80%);
+    box-shadow: 0 0 8px #ff4400, 0 0 15px #ffcc00;
+    opacity: 0;
+    animation: sparkFloat 0.8s ease-out forwards;
+}
+
+@keyframes sparkFloat {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-80px) scale(0.2);
+        opacity: 0;
+    }
+}
+
+/* ==================================
+   3. ATTACKER GLOW AURA
+   ================================== */
+@keyframes attackerGlow {
+    0% {
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 0px rgba(255, 200, 0, 0);
+    }
+
+    50% {
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 200, 0, 0.8);
+    }
+
+    100% {
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 0px rgba(255, 200, 0, 0);
+    }
+}
+
+.attacker-aura {
+    animation: attackerGlow 0.5s ease-out forwards !important;
+}
+
+/* ==================================
+   4. LEADERBOARD
+   ================================== */
+.leaderboard-section {
+    margin-top: 4rem;
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 25px;
+    border: 1px solid rgba(255, 61, 0, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+.leaderboard-section h2 {
+    color: var(--accent);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#champion-text {
+    color: var(--secondary);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+#champion-text span {
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px var(--secondary);
+}
+
+.table-container {
+    overflow-x: auto;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0D0D0D;
+    text-align: left;
+    font-size: 1.1rem;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.leaderboard-table th {
+    background: linear-gradient(90deg, #1f1f1f, #111111);
+    color: var(--accent);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.leaderboard-table tbody tr:hover {
+    background: rgba(255, 61, 0, 0.05);
+}
+
+.win-rate-high {
+    color: #4ade80;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(74, 222, 128, 0.5);
+}
+
+.win-rate-med {
+    color: var(--secondary);
+    font-weight: bold;
+}
+
+.win-rate-low {
+    color: #ef4444;
+}
+
+.rank-1 {
+    color: var(--secondary);
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.rank-2 {
+    color: #aaaaaa;
+    font-weight: bold;
+}
+
+.rank-3 {
+    color: #cd7f32;
+    font-weight: bold;
+}

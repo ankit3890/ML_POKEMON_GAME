@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Battle Arena</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=8">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>POKEMON BATTLE ARENA</h1>
+        </header>
+
+        <section class="selection-grid">
+            <div class="sel-block">
+                <label for="p1-select">PLAYER 1</label>
+                <select id="p1-select"></select>
+            </div>
+            <div class="sel-block">
+                <label for="p2-select">PLAYER 2</label>
+                <select id="p2-select"></select>
+            </div>
+        </section>
+
+        <main class="battle-grid">
+            <!-- Player 1 Card -->
+            <div id="p1-card" class="pokemon-card">
+                <h3 id="p1-name">---</h3>
+                <div id="p1-types" class="type-container"></div>
+                <img id="p1-sprite" class="pokemon-sprite" src="" alt="">
+                <div class="hp-container">
+                    <div id="p1-hp-bar" class="hp-bar"></div>
+                </div>
+                <div class="hp-text">HP: <span id="p1-hp-val">0</span> / <span id="p1-hp-max">0</span></div>
+                <div id="p1-stats" class="stats-box"></div>
+                <div class="prob-text">Win Prob: <span id="p1-prob">0%</span></div>
+            </div>
+
+            <!-- Player 2 Card -->
+            <div id="p2-card" class="pokemon-card">
+                <h3 id="p2-name">---</h3>
+                <div id="p2-types" class="type-container"></div>
+                <img id="p2-sprite" class="pokemon-sprite" src="" alt="">
+                <div class="hp-container">
+                    <div id="p2-hp-bar" class="hp-bar"></div>
+                </div>
+                <div class="hp-text">HP: <span id="p2-hp-val">0</span> / <span id="p2-hp-max">0</span></div>
+                <div id="p2-stats" class="stats-box"></div>
+                <div class="prob-text">Win Prob: <span id="p2-prob">0%</span></div>
+            </div>
+        </main>
+
+        <div class="controls">
+            <button id="start-btn" class="start-btn">🚀 START BATTLE</button>
+            <button id="random-btn" class="secondary-btn">🎲 RANDOM BATTLE</button>
+        </div>
+
+        <div id="log" class="battle-log">
+            <div class="log-entry">Waiting for battle...</div>
+        </div>
+
+        <section class="leaderboard-section">
+            <h2>🏆 Pokémon Leaderboard</h2>
+            <h3 id="champion-text">👑 Current Champion: <span>---</span></h3>
+            <div class="table-container">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Pokémon</th>
+                            <th>Wins</th>
+                            <th>Losses</th>
+                            <th>Win Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}?v=8"></script>
+</body>
+
+</html>

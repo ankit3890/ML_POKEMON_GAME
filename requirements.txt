@@ -1,0 +1,9 @@
+Flask
+Flask-Cors
+gunicorn
+pandas
+numpy
+scikit-learn
+seaborn
+matplotlib
+kagglehub
