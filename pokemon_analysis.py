@@ -117,7 +117,7 @@ def simulate_battle(p1, p2, bk):
     p1_types = [str(bk.loc[p1_name_idx, "type1"]).lower(), str(bk.loc[p1_name_idx, "type2"]).lower()]
     p2_types = [str(bk.loc[p2_name_idx, "type1"]).lower(), str(bk.loc[p2_name_idx, "type2"]).lower()]
 
-    type_mapping = {"fighting": "fight"}
+    type_mapping = {}
 
     p1_multiplier = 1
     for t in p1_types:
@@ -165,7 +165,7 @@ def simulate_turn_battle(p1, p2, bk):
     log = []
     history = []
     
-    type_mapping = {"fighting": "fight"}
+    type_mapping = {}
 
     if p1["speed"] >= p2["speed"]:
         first, second = p1, p2
