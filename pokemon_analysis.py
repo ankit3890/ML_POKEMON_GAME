@@ -1,10 +1,6 @@
 import pandas as pd
 import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
 import os
-# Removed: from sklearn.model_selection import train_test_split
-# Removed: from sklearn.ensemble import RandomForestClassifier
 
 def prepare_data():
     # Prefer local CSV for deployment
