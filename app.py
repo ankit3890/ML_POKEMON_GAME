@@ -5,6 +5,7 @@ import numpy as np
 import os
 from pokemon_analysis import prepare_data, simulate_turn_battle
 import pickle
+import gzip
 
 app = Flask(__name__)
 CORS(app)
@@ -13,14 +14,14 @@ CORS(app)
 # DATA LOAD & INITIALIZATION
 # ===============================
 print("Loading Pokémon data and model...")
-if os.path.exists("model_cache.pkl"):
-    with open("model_cache.pkl", "rb") as f:
+if os.path.exists("model_cache.pkl.gz"):
+    with gzip.open("model_cache.pkl.gz", "rb") as f:
         data = pickle.load(f)
         bk = data["bk"]
         encoded_df = data["encoded_df"]
         df_ml = data["df_ml"]
         model = data["model"]
-    print("Loaded from model_cache.pkl successfully!")
+    print("Loaded from model_cache.pkl.gz successfully!")
 else:
     bk, encoded_df, df_ml, model = prepare_data()
     print("Computed dynamically successfully!")
