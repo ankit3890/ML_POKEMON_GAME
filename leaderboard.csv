@@ -4,7 +4,7 @@ Ivysaur,0,0
 Venusaur,0,0
 Charmander,0,0
 Charmeleon,0,0
-Charizard,5,0
+Charizard,8,0
 Squirtle,0,0
 Wartortle,0,0
 Blastoise,0,0
@@ -23,7 +23,7 @@ Spearow,0,0
 Fearow,0,0
 Ekans,0,0
 Arbok,0,0
-Pikachu,3,6
+Pikachu,3,9
 Raichu,0,1
 Sandshrew,0,0
 Sandslash,0,0
@@ -139,7 +139,7 @@ Porygon,0,0
 Omanyte,0,0
 Omastar,0,0
 Kabuto,0,0
-Kabutops,0,0
+Kabutops,1,0
 Aerodactyl,0,0
 Snorlax,0,0
 Articuno,0,0
@@ -344,7 +344,7 @@ Crawdaunt,0,0
 Baltoy,0,0
 Claydol,0,0
 Lileep,0,0
-Cradily,0,0
+Cradily,0,1
 Anorith,0,0
 Armaldo,0,0
 Feebas,0,0
@@ -491,14 +491,14 @@ Phione,0,0
 Manaphy,0,0
 Darkrai,0,0
 Shaymin,0,0
-Arceus,4,0
+Arceus,5,0
 Victini,0,0
 Snivy,0,0
 Servine,0,0
 Serperior,0,0
 Tepig,0,0
 Pignite,0,0
-Emboar,0,0
+Emboar,0,2
 Oshawott,0,0
 Dewott,0,0
 Samurott,0,0
@@ -697,7 +697,7 @@ Heliolisk,0,0
 Tyrunt,0,0
 Tyrantrum,0,0
 Amaura,0,0
-Aurorus,0,0
+Aurorus,0,1
 Sylveon,0,0
 Hawlucha,0,0
 Dedenne,0,0
@@ -756,7 +756,7 @@ Lurantis,0,0
 Morelull,0,0
 Shiinotic,0,0
 Salandit,0,0
-Salazzle,0,0
+Salazzle,0,1
 Stufful,0,0
 Bewear,0,0
 Bounsweet,0,1
