@@ -90,6 +90,8 @@ function injectDynamicTheme(color1, color2) {
         background: radial-gradient(circle at left, ${color1}22 0%, #050816 60%),
                     radial-gradient(circle at right, ${color2}22 0%, #050816 60%) !important;
         transition: background 0.5s ease;
+        pointer-events: none;
+        z-index: -1;
     }
     #p1-card {
         border: 2px solid ${color1} !important;
@@ -116,6 +118,8 @@ function applyVictoryTheme(color) {
     body::before {
         background: radial-gradient(circle at center, ${color}55 0%, #050816 70%) !important;
         transition: background 1s ease;
+        pointer-events: none;
+        z-index: -1;
     }
     .pokemon-card {
         box-shadow: 0 0 40px ${color} !important;
