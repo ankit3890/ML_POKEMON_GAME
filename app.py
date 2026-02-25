@@ -134,4 +134,4 @@ def leaderboard():
     return jsonify(lb.head(20).to_dict(orient='records'))
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=False, use_reloader=False)
+    app.run(host='0.0.0.0', port=5000, debug=True)

@@ -3,5 +3,6 @@ Flask-Cors
 gunicorn
 pandas
 numpy
+seaborn
+matplotlib
 
-streamlit
