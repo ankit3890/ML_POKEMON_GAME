@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import os
 from pokemon_analysis import prepare_data, simulate_turn_battle
+import pickle
 
 app = Flask(__name__)
 CORS(app)
@@ -12,8 +13,17 @@ CORS(app)
 # DATA LOAD & INITIALIZATION
 # ===============================
 print("Loading Pokémon data and model...")
-bk, encoded_df, df_ml, model = prepare_data()
-print("Initialized successfully!")
+if os.path.exists("model_cache.pkl"):
+    with open("model_cache.pkl", "rb") as f:
+        data = pickle.load(f)
+        bk = data["bk"]
+        encoded_df = data["encoded_df"]
+        df_ml = data["df_ml"]
+        model = data["model"]
+    print("Loaded from model_cache.pkl successfully!")
+else:
+    bk, encoded_df, df_ml, model = prepare_data()
+    print("Computed dynamically successfully!")
 
 LEADERBOARD_FILE = "leaderboard.csv"
 
