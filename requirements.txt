@@ -3,4 +3,4 @@ Flask-Cors
 gunicorn
 pandas
 numpy
-scikit-learn
+
