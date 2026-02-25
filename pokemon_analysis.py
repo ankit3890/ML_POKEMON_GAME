@@ -14,8 +14,19 @@ def prepare_data():
         bk = pd.read_csv("pokemon.csv")
     else:
         # Download latest version as fallback
-        path = kagglehub.dataset_download("rounakbanik/pokemon")
-        bk = pd.read_csv(os.path.join(path, "pokemon.csv"))
+        path = kagglehub.dataset_download("maca11/all-pokemon-dataset")
+        df1 = pd.read_csv(os.path.join(path, "All_Pokemon.csv"))
+        df1.columns = df1.columns.str.strip()
+        df_new = df1.rename(columns={
+            "Number": "pokedex_number", "Name": "name", "Type 1": "type1", "Type 2": "type2",
+            "HP": "hp", "Att": "attack", "Def": "defense", "Spa": "sp_attack", "Spd": "sp_defense", "Spe": "speed",
+            "Legendary": "is_legendary", "Height": "height_m", "Weight": "weight_kg", "Catch Rate": "capture_rate"
+        })
+        df_new.columns = df_new.columns.str.replace("Against ", "against_", regex=False).str.lower().str.replace(" ", "_")
+        df_new["type2"] = df_new["type2"].fillna("none")
+        df_new = df_new.rename(columns={"bst": "base_total"})
+        bk = df_new.copy()
+        bk.to_csv("pokemon.csv", index=False)
     
     df = bk.copy()
 
@@ -32,7 +43,7 @@ def prepare_data():
 
     # Cleaning
     drop_cols = ["japanese_name", "pokedex_number", "classfication", "abilities"] # Kept 'name' for lookup
-    df = df.drop(columns=drop_cols)
+    df = df.drop(columns=[col for col in drop_cols if col in df.columns])
     df["type2"] = df["type2"].fillna("None")
     df["height_m"] = df["height_m"].fillna(df["height_m"].median())
     df["weight_kg"] = df["weight_kg"].fillna(df["weight_kg"].median())
@@ -60,6 +71,9 @@ def prepare_data():
     df_ml["is_legendary"] = df_ml["is_legendary"].astype(int)
     bool_cols = df_ml.select_dtypes(include=["bool"]).columns
     df_ml[bool_cols] = df_ml[bool_cols].astype(int)
+    
+    # Drop all unused text strings from the maca11 dataset (Dex Entry, Growth Rate, etc.)
+    df_ml = df_ml.select_dtypes(exclude=['object', 'string'])
 
     # Train Model
     battle_df = generate_battles(df_ml, bk, n_battles=5000)
@@ -86,13 +100,13 @@ def simulate_battle(p1, p2, bk):
 
     p1_multiplier = 1
     for t in p1_types:
-        if t != "nan":
+        if t not in ["nan", "none"]:
             col = f"against_{type_mapping.get(t, t)}"
             p1_multiplier = max(p1_multiplier, p2.get(col, 1))
 
     p2_multiplier = 1
     for t in p2_types:
-        if t != "nan":
+        if t not in ["nan", "none"]:
             col = f"against_{type_mapping.get(t, t)}"
             p2_multiplier = max(p2_multiplier, p1.get(col, 1))
 
@@ -155,7 +169,7 @@ def simulate_turn_battle(p1, p2, bk):
 
         multiplier = 1
         for t in first_types:
-            if t != "nan":
+            if t not in ["nan", "none"]:
                 col = f"against_{type_mapping.get(t, t)}"
                 multiplier = max(multiplier, bk.loc[second_idx, col])
         
@@ -191,7 +205,7 @@ def simulate_turn_battle(p1, p2, bk):
         
         multiplier = 1
         for t in second_types:
-            if t != "nan":
+            if t not in ["nan", "none"]:
                 col = f"against_{type_mapping.get(t, t)}"
                 multiplier = max(multiplier, bk.loc[first_idx, col])
         
