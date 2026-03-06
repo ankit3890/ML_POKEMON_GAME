@@ -133,6 +133,7 @@ def leaderboard():
     # Convert dataframe back to dictionary array
     return jsonify(lb.head(20).to_dict(orient='records'))
 
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
