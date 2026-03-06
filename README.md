@@ -13,7 +13,7 @@ TRY IT HERE - https://ml-pokemon-game.onrender.com/
 ## Technology Stack
 *   **Backend:** Python 3, Flask, scikit-learn, Pandas, NumPy
 *   **Frontend:** Vanilla JS, vanilla cross-browser HTML5 & CSS3 (No external bloated JS libraries).
-
+---
 ## Fronted Vibe Code with help of AntiGravity
 
 ## How to Run Locally
@@ -41,5 +41,3 @@ python app.py
 ```
 *The Arena will be live at `http://localhost:5000`.*
 
----
-*Created as an advanced ML application & portfolio piece.*
